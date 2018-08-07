@@ -1,0 +1,381 @@
+body{
+	position: relative;
+}
+#SE3_header .boxshadow{
+    box-shadow: 0px 0px 0px transparent;
+    border-bottom: 1.5px solid rgb(234,234,234);
+}
+
+.myCenterBody .container{
+    padding-top: 50px;
+}
+
+.myCenterBody .menu-left ul{
+    border-right:1.5px solid rgb(234,234,234);
+}
+
+.myCenterBody .menu-left ul li{
+    list-style: none;
+    font-size: 16px;
+    text-align: center;
+    padding-top: 6px;
+    cursor: pointer;
+}
+.myCenterBody .menu-left ul li.active,.myCenterBody .menu-left ul li:hover{
+    color: #d0c4af;
+    border-right:2px solid #d0c4af;
+}
+
+.myCenterBody .menu-left h3{
+    margin-left: 20px;
+    text-align: center;
+}
+
+.show-area>div{
+    margin-left: 40px;
+}
+.show-area .Order-top ul li{
+    list-style:none;
+    width: 100px;
+    float: left;
+    font-size: 18px;
+    padding-right: 3px;
+    padding-left: 3px;
+    border-right :2px solid rgb(234,234,234);
+    border-bottom:2px solid rgb(234,234,234);
+    height: 35px;
+    line-height: 35px;
+    text-align: center;
+    cursor: pointer;
+}.show-area .Order-top ul li:last-child{
+    border-right: 0px;
+ }
+
+ .Order-search .input-group{
+     padding-top: 3px;
+     padding-left: 15px;
+     width: 230px;
+    height: 30px;
+ }
+ .Order-search .input-group input{
+     height: 31px;
+     line-height: 31px;
+     width: 200px;
+     border: 0.5px solid gray;
+ }
+.Order-top ul li.active,.Order-top ul li:hover{
+    color: #d0c4af;
+    border-bottom: 2px solid #d0c4af;
+}
+.Order-list{
+    padding-top: 50px;
+}
+.Order-list .panel{
+    width:855px;
+}
+.Order-list .panel .panel-heading span{
+    padding-right: 100px;
+}
+.panel-body .items{
+	width:800px;
+	border-bottom:1.5px #f5f5f5 dashed;
+	 position: relative;
+}
+
+.panel-body .items .cell{
+    width: 100px;
+   position: relative;
+   top:15px;
+   right:10%;
+}
+.price{
+    position: relative;
+     width: 100px;
+     height: 70px;
+     left:25%;
+    text-align: center;
+ }
+ .panel-body .goods{
+ position: relative;
+ right:22%;
+ }
+.panel-body .goods span{
+	display:inline-block;
+	width:120px;
+}
+.panel-body div,.cell span,.panel-footer span{
+    text-align: center;
+    display: inline-block;
+    
+}.panel-footer span{
+	width:70px;
+	text-align:center;
+}
+.panel-footer span:first-child{
+	width:150px;
+}
+
+.panel-footer .cell{
+	margin-left:0px;
+}
+.cell button,.panel-footer button,.state-button button{
+    background: #d0c4af;
+}
+.panel-footer{
+	overflow:hidden;
+}
+.show-area .Message,.show-area .Address{
+    display: none;
+}
+
+.Message .Message-list{
+    padding-top: 20px;
+}
+.Message .Message-list>ul>li>a{
+    color: #3c3c3c;
+    font-size: 16px;
+}
+.Message .Message-list>ul>li.active ,.Message .Message-list>ul>li:hover{
+    color: #d0c4af;
+    border-top: 1.4px solid #d0c4af;
+    border-radius: 8px;
+}
+.Message-list .group{
+    margin: 20px;
+}.Message-list .group:last-child{
+     margin-left: 80px;
+ }
+.Message-list .group span,.Message-list .group label,.Address .group span,.Address  .group label{
+    width: 100px;
+    text-align: right;
+}
+.Message-list .group button,.Address .group button{
+    width: 140px;
+    background: #d0c4af;
+}
+
+.Address-table  > tbody > tr > td,th{
+    text-align: center;
+    vertical-align:middle;
+    line-height: 40px;
+}
+.Address{
+    margin-top: 20px;
+}
+.Address-top h3{
+    display: inline;
+}
+.panel .panel-heading i{
+    cursor: pointer;
+}
+.page{
+	float:left;
+	margin:10px 300px;
+}
+.page span{
+	margin:0 10px;
+	font-size:16px;
+	color:#333;
+	 cursor: pointer;
+}
+.page span:hover{
+	
+	color:#d0c4af;
+	text-decoration:none;
+}
+body .tip{
+	 position: fixed;
+	 top:50%;
+	 left:50%;
+	 width:200px;
+	 height:130px;
+	 line-height:130px;
+	 background-color: #333;
+     background-color:rgba(0,0,0,0.3);
+     border:1px solid transparent;
+     border-radius: 5px;
+     color:#fff;
+     text-align: center;
+    display:none; 
+}
+body .tip>h4{
+	 line-height:130px;
+}
+.inputgroup{
+	 position: relative;
+}
+.inputgroup i{
+	position:absolute;
+	top:2px;
+	right:10px;
+	display:none;
+}
+.inputgroup p{
+	position:absolute;
+	top:-2px;
+	right:-130px;
+	display:none;
+}
+.modal-body .inputgroup.addrphone p{
+	right:-140px;
+}
+.isNoPanel{
+ 	margin:0 300px;
+ 	display:none;
+}.isNoPanel i{
+	font-size:100px;
+	display:block;
+	    text-align: center;
+	    margin-left:-120px;
+}
+.isNoPanel span{
+	display:inline-block;
+}
+.state-button{
+	position:absolute;
+	top:35%;
+}
+.state-button button{
+	display:none;
+}
+.Order-state{
+	position: relative;
+	left:60px;
+	font-weight:bold;
+	fonr-size:1.1em;
+}
+
+.Evaluate{
+	background-color: rgba(0, 0, 0, 0.9);
+	position:fixed;
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+	z-index:100000;
+	display:none;
+}
+.Evaluate-area{
+	width:600px;
+	height:400px;
+	position:fixed;
+	top:50%;
+	left:50%;
+	margin-left:-300px;
+	margin-top:-200px;
+	background-color:#fff;
+	z-index:101111;
+	display:none;
+}
+.Evaluate-area i.layui-icon-close{
+	cursor:pointer;
+	font-size:30px;
+	margin-top:20px;
+	margin-right:20px;
+}
+
+.Evaluate-area .product-img{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    background-color: #f5f5f5;
+    left:20px;
+    top:20px;
+}
+.Evaluate-area .star{
+    position: relative;
+    display: inline-block;
+    width: 250px;
+    height: 50px;
+    left: 50px;
+    top: -55px;
+}
+.Evaluate-area .text{
+    display: inline-block;
+    width:150px;
+    font-size: 14px;
+    float:right;
+    position: relative;
+    top: -133px;
+    right: 195px;
+}
+
+.Evaluate-area .product-intr{
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    position: relative;
+    width: 200px;
+    height: 130px;
+    top: 35px;
+    left: 20px;
+
+
+}
+.Evaluate-area .product-intr>div{
+   line-height: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-bottom: 13px;
+    width: 200px;
+    height: 30px;
+}
+.Evaluate-main{
+    position: relative;
+    left: 240px;
+    bottom:110px;
+    width: 340px;
+    height: 130px;
+    background-color: black;
+}
+.Evaluate-img{
+    position: absolute;
+    width: 340px;
+    height: 110px;
+    bottom:200px;
+    left: 240px;
+}
+.Evaluate-img .img-list li{
+    float: left;
+    width: 65px;
+    height: 90px;
+    margin:5px 10px;
+    background:  url("../img/icon/add.jpg") no-repeat center center;
+    -webkit-background-size: 30%;
+    background-size: 30%;
+    border: 1px #9F9F9F dashed;
+}
+.Evaluate-img-item input{
+	z-index:1000;
+    opacity: 0;
+    height: 90px;
+    width: 65px;
+}
+/* .Evaluate-img-item:hover,
+.Evaluate-img-item a:hover{
+    cursor: pointer;
+} */
+ .Evaluate-img-item a img{
+   position: absolute;
+	display:inline-block;
+	width:65px;
+	height:90px;
+	overflow:hidden;
+}  
+.Evaluate-main textarea{
+    width:340px;
+    height: 130px;
+}
+.Evaluate-main span{
+    position: absolute;
+    top: -30px;
+    left:2px;
+}
+.Evaluate-area button.layui-btn{
+    position: absolute;
+   bottom:2px;
+    right: 10px;
+}
