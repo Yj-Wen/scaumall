@@ -4,37 +4,136 @@ $(document).ready(function () {
 	 var $delete;
 	 var $deleteIndent;
 	 var currentPwd;
-    $(".Order-top>ul>li").click(function () {
-        $(".Order-list .showli").removeClass("showli").hide();
-        $(".isNoPanel").hide();
-    	$(".page").show();
-        $(this).addClass("active").siblings().removeClass("active");
-        var select=$(this).attr("data-select");console.log(select);
-        $(".page").show();
-        if (select!=0) {
-        	console.log($("span.deal-state[data-state=" + select + "]").text());
-        	$("span.deal-state[data-state=" + select + "]").parents(".panel").addClass("showli").fadeIn().siblings(".panel:not(.showli)").fadeOut();
-        	var $test=$(".panel.showli");
-            if($test.length==0){
-            	$(".isNoPanel").show();
-            	$(".page").hide();
-            }
-        }
-        else
-        {
-            $(".panel").addClass("showli").fadeIn("fast");
-            $(".isNoPanel").hide();
-        	$(".page").show();
-        	var $test=$(".panel.showli");
-            if($test.length==0){
-            	$(".isNoPanel").show();
-            	$(".page").hide();
-            }
-        }
-    });
+	 var $thisitem;
+	 var $isallevaluate;
 //    点击订单状态分类显示相应的订单
-    
-    
+     
+	 $(".Order-top>ul>li").click(function (){
+		 $(this).siblings().removeClass("active");
+		 $(this).addClass("active");
+		   $(".showpage").empty();
+		var select=$(this).attr("data-select");
+		if(select!=0){
+			var itemList=[];
+			console.log("selcet="+select);
+			console.log("jspstate="+parseInt(parseInt(select)-1));
+			var items=$(".Order-list .noshow .panel[data-state="+select+"]");
+			hasitem(items.length);
+			console.log(items.length);
+			if(items.length>0){
+			var page=Math.ceil(parseFloat(items.length)/5);
+			/*console.log(items.length);
+			console.log(page);*/
+			var z=items.length;
+			for(var i=0;i<page;i++){
+				var j=0;
+				var item={};
+				for(j;j<5;j++){
+					if(z<1){
+						break;
+					}
+					else{
+						var count=parseInt(z)-1;
+						item["n"+j]=items.get(count);
+						z--;
+					}
+				}
+				itemList.push(item);
+			}
+			 console.log(itemList);
+			  var itemData={
+			            allPage:page,
+			            data:itemList
+			 };
+			  $(".showPagePaging").empty();
+			  $(".showPagePaging").simplePaging({
+		            allPage: itemData.allPage,//总页数
+		            showPage: 2,//显示页数
+		            startPage: 1,//第一页页码数字
+		            initPage: 1,//加载完毕自动跳转到第n页(初始化激活页)
+		            initPageClick:true,//每次页面加载完毕后，是否触发initPage页的绑定事件
+		            first: "首页",//首页显示字符
+		            last: "尾页",//尾页显示字符
+		            prev: "«",//上一页显示字符
+		            next: "»",//下一页显示字符
+		            showTurnTo: true,//是否显示跳转按钮，true显示，false不显示
+		            animateType: "animation",//过渡模式：动画“animation”、跳动“jumpy”、快速移动“fast”、正常速度移动“normal”、缓慢的速度移动“slow”、异常缓慢的速度移动“verySlow”
+		            animationTime: 300,//animateType为animation时，动画过渡时间(ms)
+		            callBack: function (num) {
+		                var showPage = $(".showpage");
+		                var data  = itemData.data[num-1];
+		                var str = "";
+		                for (var key in data){
+		                    str+="<div class=\"panel panel-default\">"+data[key].innerHTML+"</div>";
+		                    /* showPage.html(data[key]);*/
+
+		                }
+		                showPage.html(str);
+		            }
+		        });
+			}
+		}
+		else{
+			var itemList=[];
+			var items=$(".Order-list .noshow .panel");
+			hasitem(items.length);
+			if(items.length>0){
+			var page=Math.ceil(parseFloat(items.length)/5);
+			console.log(items.length);
+			console.log(page);
+			var z=items.length;
+			for(var i=0;i<page;i++){
+				var j=0;
+				var item={};
+				for(j;j<5;j++){
+					if(z<1){
+						break;
+					}
+					else{
+						var count=parseInt(z)-1;
+						item["n"+j]=items.get(count);
+						z--;
+					}
+				}
+				itemList.push(item);
+			}
+			 console.log(itemList);
+			  var itemData={
+			            allPage:page,
+			            data:itemList
+			 };
+			  $(".showPagePaging").empty();
+			  $(".showPagePaging").simplePaging({
+		            allPage: itemData.allPage,//总页数
+		            showPage: 2,//显示页数
+		            startPage: 1,//第一页页码数字
+		            initPage: 1,//加载完毕自动跳转到第n页(初始化激活页)
+		            initPageClick:true,//每次页面加载完毕后，是否触发initPage页的绑定事件
+		            first: "首页",//首页显示字符
+		            last: "尾页",//尾页显示字符
+		            prev: "«",//上一页显示字符
+		            next: "»",//下一页显示字符
+		            showTurnTo: true,//是否显示跳转按钮，true显示，false不显示
+		            animateType: "animation",//过渡模式：动画“animation”、跳动“jumpy”、快速移动“fast”、正常速度移动“normal”、缓慢的速度移动“slow”、异常缓慢的速度移动“verySlow”
+		            animationTime: 300,//animateType为animation时，动画过渡时间(ms)
+		            callBack: function (num) {
+		                var showPage = $(".showpage");
+		                var data  = itemData.data[num-1];
+		                var str = "";
+		                for (var key in data){
+		                    str+="<div class=\"panel panel-default\">"+data[key].innerHTML+"</div>";
+		                    /* showPage.html(data[key]);*/
+
+		                }
+		                showPage.html(str);
+		            }
+		        });
+			}
+		}
+	 });
+	 
+	 $(".Order-top>ul>li[data-select=0]").click();
+	 
     $(".menu-item>li").click(function () {
         $(this).addClass("active").siblings().removeClass("active");
         var select=$(this).attr("data-select");console.log(select);
@@ -86,19 +185,66 @@ $(document).ready(function () {
 //添加地址按钮的点击事件
     
     $(".search-button").click(function () {
-        $("div.panel").hide();
-        $(".isNoPanel").hide();
-    	$(".page").show();
-        var orderid=$("#search").val();
-       $(".panel-body .goods span:contains("+orderid+")").parents(".panel").show();
-       if($(".panel-body .goods span:contains("+orderid+")").length==0){
-    	    $(".isNoPanel").show();
-       		$(".page").hide();
+        $(".showpage").empty();
+       var orderid=$("#search").val();
+       var items= $(".noshow .panel:hidden .panel-body .goods span:contains("+orderid+")").parents(".panel");
+      hasitem(items.length);
+       console.log(items.length);
+       if(items.length>0){
+       var itemList=[];
+       var page=Math.ceil(parseFloat(items.length)/5);
+       var z=1;
+       for (var i=0;i<page;i++){
+           var j=0;
+           var item={};
+           for (j ;j<5;j++){
+               if (z>items.length){
+                   break
+               }
+               else{
+                   var count=parseInt(z)-1;
+                   item["n"+j]=items.get(count);
+                   z++;
+               }
+           }
+           itemList.push(item);   
+       }
+       console.log(itemList);
+		  var itemData={
+		            allPage:page,
+		            data:itemList
+		 };
+		  $(".showPagePaging").empty();
+		  $(".showPagePaging").simplePaging({
+	            allPage: itemData.allPage,//总页数
+	            showPage: 2,//显示页数
+	            startPage: 1,//第一页页码数字
+	            initPage: 1,//加载完毕自动跳转到第n页(初始化激活页)
+	            initPageClick:true,//每次页面加载完毕后，是否触发initPage页的绑定事件
+	            first: "首页",//首页显示字符
+	            last: "尾页",//尾页显示字符
+	            prev: "«",//上一页显示字符
+	            next: "»",//下一页显示字符
+	            showTurnTo: true,//是否显示跳转按钮，true显示，false不显示
+	            animateType: "animation",//过渡模式：动画“animation”、跳动“jumpy”、快速移动“fast”、正常速度移动“normal”、缓慢的速度移动“slow”、异常缓慢的速度移动“verySlow”
+	            animationTime: 300,//animateType为animation时，动画过渡时间(ms)
+	            callBack: function (num) {
+	                var showPage = $(".showpage");
+	                var data  = itemData.data[num-1];
+	                var str = "";
+	                for (var key in data){
+	                    str+="<div class=\"panel panel-default\">"+data[key].innerHTML+"</div>";
+	                    /* showPage.html(data[key]);*/
+
+	                }
+	                showPage.html(str);
+	            }
+	        });
        }
     });
 //订单号查询
     
-    $(".panel .panel-heading").on("click","i",function () {
+    $(".showpage").on("click",".panel .panel-heading i",function () {
     	var indentId=$(this).siblings(".Order-id").attr("data-indentID");
     	$deleteIndent=$(this);
     	$.ajax({
@@ -213,61 +359,11 @@ $(document).ready(function () {
         	 $(".modal-body .group .inputgroup i.glyphicon-remove,.modal-body .group .inputgroup p").show();
         	 return false;
         }
-//        $modify.parents("td").siblings(".addressName").text($("#addressName").val());
-//        $modify.parents("td").siblings(".addressDetail").text($("#addressDetail").val());
-//        $modify.parents("td").siblings(".addressPhone").text($("#addressPhone").val());
-//        $modify.parents("td").siblings(".addressPostcode").text($("#addressPostcode").val());
-//        $("#addressName").val("");
-//        $("#addressDetail").val("");
-//        $("#addressPhone").val("");
-//        $("#addressPostcode").val("");
+
     });
 //地址修改
     
-    $(".panel").each(function(){
-    	var page=$(this).attr("data-page");
-    	var pageNumber=Math.ceil((parseFloat(page)+1.0)/5.0);
-    	$(this).attr("data-pagenumber",pageNumber);
-    	console.log(pageNumber);	
-    });
-    console.log($(".panel:last").attr("data-pagenumber"));
-    var MaxPage=$(".panel:last").attr("data-pagenumber");
-    var j=1;
-    for(j;j<=MaxPage;j++){
-    	var option='<option value=\"'+j+'\">第'+j+'页</option>';
-    	$("#PageNumber").append(option);	
-    } 
-    console.log($("#PageNumber").val());
-    function check(){
-    $(".panel").each(function(){
-    	if($(this).attr("data-pagenumber")==$("#PageNumber").val()){
-    		$(this).show();
-    	}
-    	else{
-    		$(this).hide();
-    	}
-    });
-    }
-    $("#pre").click(function(){
-    	if($("#PageNumber").val()>1){
-    	$("#PageNumber").val($("#PageNumber").val()-1);
-    	console.log($("#PageNumber").val());
-    	check();
-    	}
-    	else{
-    		alert("已经是第一页了");
-    	}
-    });
-    $("#last").click(function(){
-    	if($("#PageNumber").val()<MaxPage){
-    	$("#PageNumber").val($("#PageNumber").val()+1);
-    	console.log($("#PageNumber").val());
-    	check();
-    	}
-    	else{
-    		alert("已经是最后一页了");
-    	}
-    });
+ 
 /*    var totalPrice=0;
     $(".totalPrice").each(function(){
     	
@@ -279,7 +375,11 @@ $(document).ready(function () {
     	var flag=0;
     	var jspState=$(this).attr("jspstate");
     	var dataState=parseInt(jspState)+1;
-    	$(this).attr("data-state",dataState);
+    	if($(this).parents(".panel").attr("data-state")==""){
+    		$(this).attr("data-state",dataState);
+    	}
+    	
+    	$(this).parents(".panel").attr("data-state",dataState);
     	var $target=$(this).parents(".panel-body").siblings(".panel-footer").find(".target:eq(0)");
     	console.log($target);
     	$target.attr("data-state",dataState);
@@ -297,22 +397,37 @@ $(document).ready(function () {
     	}
     	if(jspState==3){
     		$target.parents(".panel").find(".Order-state").text("待评价");	
+    		$target.parents(".panel").attr("allevaluate","3");
+    		console.log("测试一"+$target.parents(".panel").attr("allevaluate"));
     		$target.parents(".panel").find(".state-button button").show();
     		$target.parent().find("button").remove();
     	}
     	if(jspState==4){
-    		$target.parents(".panel").find(".Order-state").text("交易成功");	
+    		$target.parents(".panel").find(".Order-state").text("交易完成");	
     		$target.parent().find("button").remove(); 
     	}
     })
     
-    $(".state-button button").click(function(){
+    $(".panel .items").each(function(){
+    	var itemStateCode=$(this).find(".itemStateCode").val();
+    	if(itemStateCode!=0){
+    		$(this).find(".state-button button").hide();
+    		var str="<span>已评价</span>";
+    		$(this).find(".state-button").append(str);
+    	}
+    });
+    
+    $(".showpage").on("click",".panel .state-button button",function(){
+    	$thisitem=$(this).parents(".items");
     	var imgSrc=$(this).parents(".state-button").siblings(".goods").find("img").attr("src");
     	var goodsName=$(this).parents(".state-button").siblings(".goods").find("span").text();
     	var num=$(this).parents(".state-button").siblings(".cell").find("span:eq(0)").text();
     	var Specify=$(this).parents(".state-button").siblings(".cell").find(".testgoodsSpecify").text();
     	var goodID=$(this).siblings("input").val();
+    	var indentID=$(this).parents(".panel").find(".Order-id").attr("data-indentID");
+    	console.log(indentID);
     	console.log(goodID);
+    	$(".Evaluate-area #Evaluate-indentID").val(indentID);
     	$(".Evaluate-area #goodsID").val(goodID);
     	$(".Evaluate-area .product-img img").attr("src",imgSrc);
     	$(".Evaluate-area .product-intr .product-name").text(goodsName);
@@ -321,6 +436,7 @@ $(document).ready(function () {
     	$(".Evaluate-area #goodsSpecify").val(Specify);
     	$(".Evaluate").fadeIn("fast");
     	$(".Evaluate-area").slideDown("fast");
+    	console.log($thisitem);
     });
     
     $(".Evaluate-area i.layui-icon-close").click(function(){
@@ -582,4 +698,82 @@ $(document).ready(function () {
     	$(".page").hide();
     }
 
+	var options = {
+			url : "comment",
+			success : function(res) {
+				alert(res.result);
+			}
+		};
+	$("#mainform").submit(function() {
+		console.log($("#pic1").val());
+		$("#evaluateContent").val();
+		$thisitem.find(".itemStateCode").val(1);
+		updateluated($thisitem);
+		console.log($thisitem.parents(".panel").attr("allevaluate"));
+		$("#Evaluate-indentState").val($thisitem.parents(".panel").attr("allevaluate"));
+		console.log("传过去的值"+$("#Evaluate-indentState").val());
+		$("#mainform").ajaxSubmit(options);
+		$(".star").empty();
+		reIns(0);
+		$(".text").empty();
+		$("#resetForm").click();
+		$(".Evaluate-area i.layui-icon-close").click();
+		$(".tip").find("h4").text("评论成功");
+		$(".tip").fadeIn();
+		$(".tip").delay(1500).fadeOut();
+		return false;
+	});
 });
+
+function hasitem(a){
+	if(a==0){
+		$(".showPagePaging").hide();
+		$(".isNoPanel").show();
+	}
+	else{
+		$(".showPagePaging").show();
+		$(".isNoPanel").hide();
+	}
+}
+
+function updateluated($a){
+	var itemStateCode=$a.find(".itemStateCode").val();
+	if(itemStateCode!=0){
+		$a.find(".state-button button").hide();
+		var str="<span>已评价</span>";
+		$a.find(".state-button").append(str);
+	}
+	checkisallevaluate($a);
+}
+
+function checkisallevaluate($a){
+	var $test=$a.parents(".panel").find(".itemStateCode")
+	var count=0;
+	$test.each(function(){
+		if($(this).val()==0){
+			count++;
+		}
+	});
+	if(count==0){
+			$a.parents(".panel").attr("allevaluate","4");
+		}
+	else{
+			$a.parents(".panel").attr("allevaluate","3");
+		}
+	changeState($a);
+	
+	/*console.log($test);
+	console.log($test.length);*/
+};
+
+function  changeState($a){
+		console.log("测试2"+$a.parents(".panel").attr("allevaluate"));
+	if($a.parents(".panel").attr("allevaluate")==4){
+		$a.parents(".panel").find(".Order-state").text("交易完成");
+		var id=$a.parents(".panel").find(".Order-id").attr("data-indentID");
+		$(".noshow .Order-id[data-indentID="+id+"]").parents(".panel").attr("data-state","5");
+		$(".noshow .Order-id[data-indentID="+id+"]").parents(".panel").find(".Order-state").text("交易完成");
+		$(".noshow .Order-id[data-indentID="+id+"]").parents(".panel").find(".state-button").hide();
+	}
+	
+}

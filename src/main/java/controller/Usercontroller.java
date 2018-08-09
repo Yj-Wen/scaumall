@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +11,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import bean.Address;
 import bean.Customer;
@@ -35,7 +38,6 @@ public class Usercontroller {
 	public String signin() {
 		return "signin";
 	}
-
 	@RequestMapping(value = "signin", method = RequestMethod.POST)
 	public String signin(Customer customer,String referrer, Model model, HttpSession session) {
 		String result = "";
@@ -48,8 +50,11 @@ public class Usercontroller {
 			session.setAttribute("currentCustomer", customer);
 		}
 		String substr="http://localhost:8080/SE3-F4";
-		referrer=referrer.replaceFirst(substr, "");
-		return "forward:"+referrer;
+		if(referrer!=null){
+			referrer=referrer.replaceFirst(substr, "");
+			return "redirect:"+referrer;
+		}
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "signup", method = RequestMethod.GET)
@@ -67,7 +72,7 @@ public class Usercontroller {
 		else
 			return "signup";
 	}
-
+	
 	@RequestMapping(value = "mycenter")
 	public String mycenter(Model model, HttpSession httpSession) {
 		Customer customer = (Customer) httpSession.getAttribute("currentCustomer");
@@ -192,25 +197,13 @@ public class Usercontroller {
 	}
 	
 	@RequestMapping(value ="comment")
-	public void comment(Evaluate evaluate,Model model,ServletRequest servletRequest){
-		String result=userservice.comment(evaluate,servletRequest.getServletContext().getRealPath("/img"));
-//		if(result=="") return "forward:/products/detail/"+evaluate.getGoodsID(); 
-//		else {
-//			model.addAttribute("result",result);
-//			return "mycenter";
-//		}
-		/*if(result=="") {
-			return "redirect:/products/detail/"+evaluate.getGoodsID(); */
-		/*}*/
-
-		/*else {
-			model.addAttribute("result",result);
-			return "mycenter";
-		} */
+	@ResponseBody
+	public void comment(Evaluate evaluate,int indentID,int goodsID,String goodsSpecify,int indentState,Model model,ServletRequest servletRequest){
+		String result=userservice.comment(indentID,goodsID,goodsSpecify,indentState,evaluate,servletRequest.getServletContext().getRealPath("/img"));
 	}
 
 	@RequestMapping(value = "auction")
-	public String auction(@RequestParam("goodsID") int goodsID,@RequestParam("goodsSpecify") String goodsSpecify ,@RequestParam("goodsCount") int goodsCount,HttpSession httpSession,Model model) {
+	public String auction(@RequestParam(value="goodsID") int goodsID,@RequestParam(value="goodsSpecify") String goodsSpecify ,@RequestParam(value="goodsCount") int goodsCount,HttpSession httpSession,Model model) {
 		Customer customer=(Customer) httpSession.getAttribute("currentCustomer");
 		Indent indent=userservice.auction(goodsID,goodsSpecify,goodsCount,customer);
 		if(indent!=null)  httpSession.setAttribute("newindent", indent);
@@ -218,9 +211,9 @@ public class Usercontroller {
 	}
 	
 	@RequestMapping(value="pay")
-	public String pay(@RequestParam("addressID") int addressID,@RequestParam("indentID")int indentID,HttpSession httpSession,Model model){
+	public String pay(@RequestParam("addressID") int addressID,HttpSession httpSession,Model model,RedirectAttributes rs){
 		Customer customer=(Customer) httpSession.getAttribute("currentCustomer");
-		Indent indent =(Indent) httpSession.getAttribute("indent");
+		Indent indent =(Indent) httpSession.getAttribute("newindent");
 		if(indent!=null) {
 			if(userservice.pay(addressID,indent,customer)){
 				httpSession.removeAttribute("newindent");
@@ -228,7 +221,24 @@ public class Usercontroller {
 				return "pay";
 			}
 		}
-		model.addAttribute("result", "非法操作");
-		return "index";
+		rs.addFlashAttribute("result", "非法操作");
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value="payment")
+	public String payment(@RequestParam("indentID") int indentID,@RequestParam(value="paid") int paid,RedirectAttributes rs){
+		if(paid==0){
+			return "redirect:/user/mycenter";
+		}else {
+			userservice.payment(indentID);
+			rs.addFlashAttribute("result", "付款成功");
+			return "redirect:/user/mycenter";
+		}
+	}
+	@RequestMapping(value="mycenter/auction")
+	public String pay(@RequestParam("indentID") int indentID,HttpSession httpSession){
+		Indent indent=userservice.payfromcenter(indentID);
+		if(indent!=null) httpSession.setAttribute("newindent", indent);
+		return "auction";
 	}
 }
