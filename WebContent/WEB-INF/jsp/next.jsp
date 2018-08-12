@@ -21,7 +21,6 @@
 					<h4>
 						<strong>华农有货</strong>
 					</h4>
-					</a>
 				</div>
 			</div>
 		</div>
@@ -32,15 +31,14 @@
 				<div class="span12">
 					<ul>
 						<li>
-							<a href="index.html" class="active">
+							<a href="${pageContext.request.contextPath }/admin/tongji" class="active">
 								<i class="batch home"></i>
 								<br />
 								首页
 							</a>
 						</li>
 						<li>
-							<span class="label label-important pull-right">08</span>
-							<a href="stream.html">
+							<a href="${pageContext.request.contextPath }/admin/goodsCharge">
 								<i class="batch stream"></i>
 								<br />
 								商品管理
@@ -533,18 +531,18 @@
 								<h6>历史销量最高</h6>
 							</div>
 							<div class="bottom">
-								<h2>7720</h2>
-								<h6>春风飞机杯</h6>
+								<h2>${mymap.highestgoods.sellCount}</h2>
+								<h6>${mymap.highestgoods.goodsName}</h6>
 							</div>
 						</div>
 						<div class="panel">
 							<div class="top warning">
 								<i class="batch-big b-flag"></i>
-								<h6>土豪下单最多</h6>
+								<h6>土豪成交额最多</h6>
 							</div>
 							<div class="bottom">
-								<h2>1000</h2>
-								<h6>黄大仙</h6>
+								<h2>${mymap.customerAndPrice.customerName}</h2>
+								<h6>${mymap.customerAndPrice.finaltotalPrice}</h6>
 							</div>
 						</div>
 						<div class="panel">
