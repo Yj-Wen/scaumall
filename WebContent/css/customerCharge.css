@@ -1,0 +1,24 @@
+@CHARSET "UTF-8";
+.indentList-body td{
+	width:210px;
+}
+.indentList-body .customerItem .inputModify{
+	display:none;
+	width:206px;
+	
+}
+.indentList-body .customerItem .modify{
+	display:none;
+}
+
+}
+ .input-group{
+     position: relative;
+ }
+ .input-group span{
+     z-index: 99999;
+     position: absolute;
+     right:3px;
+     top: 1px;
+     display: none;
+ }
